@@ -23,6 +23,11 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: "Invalid credentials" });
     }
     req.session.userId = user._id;
+    res.cookie('sid', req.sessionID, { 
+        httpOnly: true,
+        secure: false, // set to true if using HTTPS
+        maxAge: 1000 * 60 * 60 // 1 hour
+    });
     res.json({ message: "Login successful" });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -33,7 +38,10 @@ router.post("/login", async (req, res) => {
 router.post("/logout", (req, res) => {
   req.session.destroy(err => {
     if (err) return res.status(500).json({ error: "Logout failed" });
+
+    res.clearCookie("sid");
     res.clearCookie("connect.sid");
+    
     res.json({ message: "Logged out successfully" });
   });
 });
