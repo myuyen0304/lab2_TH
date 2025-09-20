@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 
 // Kết nối MongoDB
-mongoose.connect("mongodb://127.0.0.1:27017/restful-session-app")
+mongoose.connect("mongodb://127.0.0.1:27017/sessionAuth")
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error(err));
 
@@ -19,7 +19,7 @@ app.use(
     secret: "mySecretKey",
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/restful-session-app" }),
+    store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/sessionAuth" }),
     cookie: { maxAge: 1000 * 60 * 60 } // 1 giờ
   })
 );
