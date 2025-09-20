@@ -39,7 +39,7 @@ router.post("/logout", (req, res) => {
 });
 
 // Route kiểm tra login
-router.get("/me", (req, res) => {
+router.get("/profile", (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ message: "Not logged in" });
   }
