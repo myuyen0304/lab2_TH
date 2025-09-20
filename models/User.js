@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
+  username: { type: String, required: true, unique: true },
   password: { type: String, required: true }
 });
 
@@ -14,7 +14,7 @@ userSchema.pre("save", async function (next) {
 });
 
 // Kiểm tra mật khẩu
-userSchema.methods.verifyPassword = async function (password) {
+userSchema.methods.comparePassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
