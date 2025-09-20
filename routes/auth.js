@@ -39,11 +39,12 @@ router.post("/logout", (req, res) => {
 });
 
 // Route kiểm tra login
-router.get("/profile", (req, res) => {
+router.get("/profile", async(req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ message: "Not logged in" });
   }
-  res.json({ message: "You are logged in", userId: req.session.userId });
+  const user = await User.findById(req.session.userId).select("-password");
+    res.json({ user });
 });
 
 module.exports = router;
